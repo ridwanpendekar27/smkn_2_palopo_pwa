@@ -1,0 +1,38 @@
+{
+  "name": "SMKN 2 Palopo",
+  "short_name": "SMKN 2",
+  "description": "Website informasi dan promosi SMKN 2 Palopo",
+
+  "start_url": "./index.html",
+  "display": "standalone",
+
+  "background_color": "#ffffff",
+  "theme_color": "#0d6efd",
+
+  "icons": [
+    {
+      "src": "images/logo-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/logo-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+
+  "screenshots": [
+    {
+      "src": "screenshots/desktop-1920x1080.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "screenshots/mobile-1080x1920.png",
+      "sizes": "1080x1920",
+      "type": "image/png"
+    }
+  ]
+}
