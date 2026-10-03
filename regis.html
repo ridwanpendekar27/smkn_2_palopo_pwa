@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registrasi - SMA Negeri 1 Nusantara</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+    <link rel="icon" href="images/logo.png" type="image/x-icon" />
+
+    <style>
+      body {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Segoe UI", Tahoma, sans-serif;
+        padding: 20px;
+      }
+      .register-card {
+        max-width: 450px;
+        width: 100%;
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        padding: 30px 25px;
+        background: white;
+      }
+      .logo {
+        width: 65px;
+        height: 65px;
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 15px;
+      }
+      .logo i {
+        font-size: 32px;
+        color: white;
+      }
+      .form-control,
+      .form-select,
+      .input-group-text {
+        border: 2px solid #e0e0e0;
+        padding: 10px 12px;
+      }
+      .input-group-text {
+        background: transparent;
+        border-right: none;
+        color: #2a5298;
+        border-radius: 10px 0 0 10px;
+      }
+      .input-group .form-control,
+      .input-group .form-select {
+        border-left: none;
+        border-radius: 0 10px 10px 0;
+      }
+      .form-control:focus,
+      .form-select:focus,
+      .input-group:focus-within .input-group-text {
+        border-color: #2a5298;
+        box-shadow: none;
+      }
+      .btn-register {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        border: none;
+        border-radius: 10px;
+        padding: 11px;
+        font-weight: 600;
+        color: white;
+        transition: all 0.3s;
+      }
+      .btn-register:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(30, 60, 114, 0.4);
+        color: white;
+      }
+      .link-login {
+        color: #2a5298;
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .link-login:hover {
+        text-decoration: underline;
+      }
+      .form-label {
+        font-weight: 600;
+        font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="register-card card">
+      <!-- Logo & Judul -->
+      <div class="logo"><i class="bi bi-person-plus-fill"></i></div>
+      <h5 class="text-center fw-bold mb-1">Daftar Akun Baru</h5>
+      <p class="text-center text-muted small mb-4">SMA Negeri 1 Nusantara</p>
+
+      <!-- Alert -->
+      <div id="alertBox"></div>
+
+      <!-- Form Registrasi -->
+      <form id="registerForm" novalidate>
+        <!-- Nama Lengkap -->
+        <div class="mb-3">
+          <label class="form-label">Nama Lengkap</label>
+          <div class="input-group">
+            <span class="input-group-text"
+              ><i class="bi bi-person-badge-fill"></i
+            ></span>
+            <input
+              type="text"
+              class="form-control"
+              id="nama"
+              placeholder="Masukkan nama lengkap"
+              required
+            />
+          </div>
+          <small class="text-danger" id="namaError"></small>
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <div class="input-group">
+            <span class="input-group-text"
+              ><i class="bi bi-envelope-fill"></i
+            ></span>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              placeholder="contoh@email.com"
+              required
+            />
+          </div>
+          <small class="text-danger" id="emailError"></small>
+        </div>
+
+        <!-- Role -->
+        <div class="mb-3">
+          <label class="form-label">Daftar Sebagai</label>
+          <div class="input-group">
+            <span class="input-group-text"
+              ><i class="bi bi-person-workspace"></i
+            ></span>
+            <select class="form-select" id="role" required>
+              <option value="">-- Pilih Role --</option>
+              <option value="Siswa">Siswa</option>
+              <option value="Guru">Guru</option>
+              <option value="Orang Tua">Orang Tua</option>
+            </select>
+          </div>
+          <small class="text-danger" id="roleError"></small>
+        </div>
+
+        <!-- Password -->
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <div class="input-group">
+            <span class="input-group-text"
+              ><i class="bi bi-lock-fill"></i
+            ></span>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              placeholder="Minimal 6 karakter"
+              required
+            />
+            <button
+              class="btn btn-outline-secondary"
+              type="button"
+              id="togglePassword"
+            >
+              <i class="bi bi-eye-fill" id="toggleIcon"></i>
+            </button>
+          </div>
+          <small class="text-danger" id="passwordError"></small>
+        </div>
+
+        <!-- Konfirmasi Password -->
+        <div class="mb-3">
+          <label class="form-label">Konfirmasi Password</label>
+          <div class="input-group">
+            <span class="input-group-text"
+              ><i class="bi bi-shield-lock-fill"></i
+            ></span>
+            <input
+              type="password"
+              class="form-control"
+              id="passwordConfirm"
+              placeholder="Ulangi password"
+              required
+            />
+          </div>
+          <small class="text-danger" id="passwordConfirmError"></small>
+        </div>
+
+        <!-- Setuju S&K -->
+        <div class="form-check mb-4">
+          <input class="form-check-input" type="checkbox" id="agree" />
+          <label class="form-check-label small" for="agree">
+            Saya setuju dengan
+            <a href="#" class="link-login">Syarat & Ketentuan</a>
+          </label>
+          <br /><small class="text-danger" id="agreeError"></small>
+        </div>
+
+        <!-- Tombol Daftar -->
+        <button type="submit" class="btn btn-register w-100" id="btnRegister">
+          <span id="btnText"
+            ><i class="bi bi-person-plus-fill me-2"></i>Daftar Sekarang</span
+          >
+          <span id="btnLoading" class="d-none">
+            <span class="spinner-border spinner-border-sm me-2"></span
+            >Memproses...
+          </span>
+        </button>
+      </form>
+
+      <p class="text-center small text-muted mt-3 mb-0">
+        Sudah punya akun?
+        <a href="login.html" class="link-login">Masuk di sini</a>
+      </p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Toggle password
+      const togglePassword = document.getElementById("togglePassword");
+      const passwordInput = document.getElementById("password");
+      const toggleIcon = document.getElementById("toggleIcon");
+
+      togglePassword.addEventListener("click", () => {
+        passwordInput.type =
+          passwordInput.type === "password" ? "text" : "password";
+        toggleIcon.classList.toggle("bi-eye-fill");
+        toggleIcon.classList.toggle("bi-eye-slash-fill");
+      });
+
+      // Form registrasi
+      const registerForm = document.getElementById("registerForm");
+      const alertBox = document.getElementById("alertBox");
+      const btnRegister = document.getElementById("btnRegister");
+      const btnText = document.getElementById("btnText");
+      const btnLoading = document.getElementById("btnLoading");
+
+      registerForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        alertBox.innerHTML = "";
+        // Reset semua error
+        [
+          "nama",
+          "email",
+          "role",
+          "password",
+          "passwordConfirm",
+          "agree",
+        ].forEach((id) => {
+          document.getElementById(id + "Error").textContent = "";
+        });
+
+        const nama = document.getElementById("nama").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const role = document.getElementById("role").value;
+        const password = document.getElementById("password").value;
+        const passwordConfirm =
+          document.getElementById("passwordConfirm").value;
+        const agree = document.getElementById("agree").checked;
+        let valid = true;
+
+        // Validasi nama
+        if (!nama) {
+          document.getElementById("namaError").textContent =
+            "Nama wajib diisi!";
+          valid = false;
+        } else if (nama.length < 3) {
+          document.getElementById("namaError").textContent =
+            "Nama minimal 3 karakter!";
+          valid = false;
+        }
+
+        // Validasi email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email) {
+          document.getElementById("emailError").textContent =
+            "Email wajib diisi!";
+          valid = false;
+        } else if (!emailRegex.test(email)) {
+          document.getElementById("emailError").textContent =
+            "Format email tidak valid!";
+          valid = false;
+        }
+
+        // Validasi role
+        if (!role) {
+          document.getElementById("roleError").textContent =
+            "Pilih role terlebih dahulu!";
+          valid = false;
+        }
+
+        // Validasi password
+        if (!password) {
+          document.getElementById("passwordError").textContent =
+            "Password wajib diisi!";
+          valid = false;
+        } else if (password.length < 6) {
+          document.getElementById("passwordError").textContent =
+            "Password minimal 6 karakter!";
+          valid = false;
+        }
+
+        // Validasi konfirmasi
+        if (!passwordConfirm) {
+          document.getElementById("passwordConfirmError").textContent =
+            "Konfirmasi wajib diisi!";
+          valid = false;
+        } else if (password !== passwordConfirm) {
+          document.getElementById("passwordConfirmError").textContent =
+            "Password tidak cocok!";
+          valid = false;
+        }
+
+        // Validasi checkbox
+        if (!agree) {
+          document.getElementById("agreeError").textContent =
+            "Anda harus menyetujui S&K!";
+          valid = false;
+        }
+
+        if (!valid) return;
+
+        // Loading
+        btnText.classList.add("d-none");
+        btnLoading.classList.remove("d-none");
+        btnRegister.disabled = true;
+
+        setTimeout(() => {
+          alertBox.innerHTML = `<div class="alert alert-success py-2 small">
+            <i class="bi bi-check-circle-fill me-2"></i>Registrasi berhasil! Silakan login.
+          </div>`;
+
+          // Simulasi simpan data
+          const userData = { nama, email, role };
+          console.log("Data pendaftar:", userData);
+          sessionStorage.setItem("registeredUser", JSON.stringify(userData));
+
+          // Redirect ke login setelah 1.5 detik
+          setTimeout(() => {
+            window.location.href = "login.html";
+          }, 1500);
+
+          btnText.classList.remove("d-none");
+          btnLoading.classList.add("d-none");
+          btnRegister.disabled = false;
+        }, 1200);
+      });
+    </script>
+  </body>
+</html>

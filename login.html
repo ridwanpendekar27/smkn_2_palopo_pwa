@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - SMA Negeri 1 Nusantara</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+    <link rel="icon" href="images/logo.png" type="image/x-icon" />
+
+    <style>
+      body {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Segoe UI", Tahoma, sans-serif;
+        padding: 20px;
+      }
+      .login-card {
+        max-width: 380px;
+        width: 100%;
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        padding: 30px 25px;
+        background: white;
+      }
+      .logo {
+        width: 65px;
+        height: 65px;
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 15px;
+      }
+      .logo i {
+        font-size: 32px;
+        color: white;
+      }
+      .form-control,
+      .input-group-text {
+        border: 2px solid #e0e0e0;
+        padding: 10px 12px;
+      }
+      .input-group-text {
+        background: transparent;
+        border-right: none;
+        color: #2a5298;
+        border-radius: 10px 0 0 10px;
+      }
+      .input-group .form-control {
+        border-left: none;
+        border-radius: 0 10px 10px 0;
+      }
+      .form-control:focus,
+      .input-group:focus-within .input-group-text {
+        border-color: #2a5298;
+        box-shadow: none;
+      }
+      .btn-login {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        border: none;
+        border-radius: 10px;
+        padding: 11px;
+        font-weight: 600;
+        color: white;
+        transition: all 0.3s;
+      }
+      .btn-login:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(30, 60, 114, 0.4);
+        color: white;
+      }
+      .link-forgot {
+        color: #2a5298;
+        text-decoration: none;
+        font-size: 13px;
+      }
+      .link-forgot:hover {
+        text-decoration: underline;
+      }
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-5px);
+        }
+        75% {
+          transform: translateX(5px);
+        }
+      }
+      .shake {
+        animation: shake 0.3s ease-in-out;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-card card">
+      <!-- Logo & Judul -->
+      <div class="logo"><i class="bi bi-mortarboard-fill"></i></div>
+      <h5 class="text-center fw-bold mb-1">SMA Negeri 1 Nusantara</h5>
+      <p class="text-center text-muted small mb-4">
+        Silakan masuk ke akun Anda
+      </p>
+
+      <!-- Alert -->
+      <div id="alertBox"></div>
+
+      <!-- Form -->
+      <form id="loginForm" novalidate>
+        <div class="mb-3">
+          <div class="input-group">
+            <span class="input-group-text"
+              ><i class="bi bi-person-fill"></i
+            ></span>
+            <input
+              type="text"
+              class="form-control"
+              id="username"
+              placeholder="Username / NIS"
+              required
+            />
+          </div>
+          <small class="text-danger" id="usernameError"></small>
+        </div>
+
+        <div class="mb-3">
+          <div class="input-group">
+            <span class="input-group-text"
+              ><i class="bi bi-lock-fill"></i
+            ></span>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              placeholder="Password"
+              required
+            />
+            <button
+              class="btn btn-outline-secondary"
+              type="button"
+              id="togglePassword"
+            >
+              <i class="bi bi-eye-fill" id="toggleIcon"></i>
+            </button>
+          </div>
+          <small class="text-danger" id="passwordError"></small>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="remember" />
+            <label class="form-check-label small" for="remember"
+              >Ingat saya</label
+            >
+          </div>
+          <a href="#" class="link-forgot">Lupa password?</a>
+        </div>
+
+        <button type="submit" class="btn btn-login w-100" id="btnLogin">
+          <span id="btnText"
+            ><i class="bi bi-box-arrow-in-right me-2"></i>Masuk</span
+          >
+          <span id="btnLoading" class="d-none">
+            <span class="spinner-border spinner-border-sm me-2"></span
+            >Memproses...
+          </span>
+        </button>
+      </form>
+
+      <p class="text-center small text-muted mt-3 mb-0">
+        &copy; 2024 SMA Negeri 1 Nusantara
+      </p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Toggle password
+      const togglePassword = document.getElementById("togglePassword");
+      const passwordInput = document.getElementById("password");
+      const toggleIcon = document.getElementById("toggleIcon");
+
+      togglePassword.addEventListener("click", () => {
+        const type = passwordInput.type === "password" ? "text" : "password";
+        passwordInput.type = type;
+        toggleIcon.classList.toggle("bi-eye-fill");
+        toggleIcon.classList.toggle("bi-eye-slash-fill");
+      });
+
+      // Form login
+      const loginForm = document.getElementById("loginForm");
+      const alertBox = document.getElementById("alertBox");
+      const btnLogin = document.getElementById("btnLogin");
+      const btnText = document.getElementById("btnText");
+      const btnLoading = document.getElementById("btnLoading");
+
+      // Data demo
+      const users = [
+        { username: "admin", password: "admin123", role: "Administrator" },
+        { username: "guru", password: "guru123", role: "Guru" },
+        { username: "siswa", password: "siswa123", role: "Siswa" },
+      ];
+
+      loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        alertBox.innerHTML = "";
+        document.getElementById("usernameError").textContent = "";
+        document.getElementById("passwordError").textContent = "";
+
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value;
+        let valid = true;
+
+        if (!username) {
+          document.getElementById("usernameError").textContent =
+            "Username wajib diisi!";
+          valid = false;
+        }
+        if (!password) {
+          document.getElementById("passwordError").textContent =
+            "Password wajib diisi!";
+          valid = false;
+        } else if (password.length < 6) {
+          document.getElementById("passwordError").textContent =
+            "Password minimal 6 karakter!";
+          valid = false;
+        }
+
+        if (!valid) return shakeCard();
+
+        // Loading
+        btnText.classList.add("d-none");
+        btnLoading.classList.remove("d-none");
+        btnLogin.disabled = true;
+
+        setTimeout(() => {
+          const user = users.find(
+            (u) => u.username === username && u.password === password,
+          );
+
+          if (user) {
+            alertBox.innerHTML = `<div class="alert alert-success py-2 small"><i class="bi bi-check-circle-fill me-2"></i>Login berhasil! Halo, <strong>${user.role}</strong>.</div>`;
+            sessionStorage.setItem("loggedIn", "true");
+            sessionStorage.setItem("username", user.username);
+            sessionStorage.setItem("role", user.role);
+            // window.location.href = "dashboard.html";
+          } else {
+            alertBox.innerHTML = `<div class="alert alert-danger py-2 small"><i class="bi bi-x-circle-fill me-2"></i>Username atau password salah!</div>`;
+            shakeCard();
+          }
+
+          btnText.classList.remove("d-none");
+          btnLoading.classList.add("d-none");
+          btnLogin.disabled = false;
+        }, 1000);
+      });
+
+      function shakeCard() {
+        const card = document.querySelector(".login-card");
+        card.classList.add("shake");
+        setTimeout(() => card.classList.remove("shake"), 400);
+      }
+    </script>
+  </body>
+</html>
